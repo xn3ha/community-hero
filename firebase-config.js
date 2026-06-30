@@ -16,7 +16,7 @@ const firebaseConfig = {
 // STEP 2: Replace with YOUR Gemini API key
 // Get it from: https://aistudio.google.com/app/apikey
 // ============================================
-const GEMINI_API_KEY = "AQ.Ab8RN6KIQfoD-8BN5rosvcsXYTKECij4RWTyWScfdCX1Ym_xkQ";
+const GEMINI_API_KEY = "AQ.Ab8RN6IOo04WtEWGhblf1SHc8WoFoitDwDjPATafDVfbTv61SA";
 
 // ============================================
 // STEP 3: Replace with YOUR Google Maps API key
