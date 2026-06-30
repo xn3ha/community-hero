@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Hero — Hyperlocal Issue Reporter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+    .feature-item { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; }
+    .feature-icon { font-size: 2rem; margin-bottom: .75rem; }
+    .feature-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; }
+    .feature-item p  { font-size: .875rem; color: var(--gray-600); }
+    .steps { counter-reset: step; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 1.5rem; }
+    .step { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; position: relative; }
+    .step-num { width: 36px; height: 36px; background: var(--green); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; margin-bottom: .75rem; }
+    .step h3 { font-size: .95rem; font-weight: 700; margin-bottom: .3rem; }
+    .step p  { font-size: .85rem; color: var(--gray-600); }
+    .cta-section { background: linear-gradient(135deg, var(--green-dark), #166534); color: #fff; text-align: center; padding: 3rem 1.5rem; border-radius: var(--radius); margin: 2.5rem 0; }
+    .cta-section h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: .75rem; }
+    .cta-section p  { opacity: .85; margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span class="icon">🌍</span> Community Hero</div>
+  <div class="nav-links">
+    <a href="index.html" class="active"><span>🏠</span> Home</a>
+    <a href="report.html"><span>📸</span> Report</a>
+    <a href="issues.html"><span>📋</span> Issues</a>
+    <a href="map.html"><span>🗺️</span> Map</a>
+    <a href="dashboard.html"><span>📊</span> Dashboard</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Report. Track. Resolve.<br>Together.</h1>
+  <p>Snap a photo, let AI identify the issue, pin it on the map, and watch your community get it fixed.</p>
+  <div class="flex gap-3 justify-content:center" style="justify-content:center;flex-wrap:wrap">
+    <a href="report.html" class="btn btn-primary" style="font-size:1rem;padding:.8rem 2rem">📸 Report an Issue</a>
+    <a href="issues.html" class="btn btn-outline" style="font-size:1rem;padding:.8rem 2rem">📋 View All Issues</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num" id="hero-total">—</span>
+      <span class="stat-label">Issues Reported</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" id="hero-resolved">—</span>
+      <span class="stat-label">Resolved</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" id="hero-open">—</span>
+      <span class="stat-label">Awaiting Action</span>
+    </div>
+  </div>
+</div>
+
+<!-- How it works -->
+<div class="container section">
+  <div class="section-title">How it works</div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><h3>Take a Photo</h3><p>Snap a picture of any community issue — pothole, leakage, broken light, waste.</p></div>
+    <div class="step"><div class="step-num">2</div><h3>AI Analyzes It</h3><p>Gemini AI reads the photo and automatically categorizes, titles, and describes the problem.</p></div>
+    <div class="step"><div class="step-num">3</div><h3>Gets Pinned on Map</h3><p>Your report is geo-tagged and visible to the entire community in real time.</p></div>
+    <div class="step"><div class="step-num">4</div><h3>Community Verifies</h3><p>Neighbors upvote the issue to signal urgency and validate the report.</p></div>
+    <div class="step"><div class="step-num">5</div><h3>Track Resolution</h3><p>Watch the status update from Open → In Progress → Resolved on the dashboard.</p></div>
+  </div>
+</div>
+
+<!-- Features -->
+<div style="background:var(--white);padding:2.5rem 0">
+  <div class="container">
+    <div class="section-title">What makes this different</div>
+    <div class="feature-grid">
+      <div class="feature-item"><div class="feature-icon">🤖</div><h3>AI-Powered Detection</h3><p>No manual form filling — Gemini Vision identifies the issue type, writes the description, and estimates severity from your photo.</p></div>
+      <div class="feature-item"><div class="feature-icon">🗺️</div><h3>Live Issue Map</h3><p>Every report is pinned on Google Maps in real time, color-coded by category so you can see your area's hotspots.</p></div>
+      <div class="feature-item"><div class="feature-icon">👥</div><h3>Community Verification</h3><p>Residents upvote issues they've witnessed, building social proof that pushes critical problems to the top.</p></div>
+      <div class="feature-item"><div class="feature-icon">📊</div><h3>Impact Dashboard</h3><p>Track resolution rates, category breakdowns, and recent activity — full transparency into what's being fixed.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="container">
+  <div class="cta-section">
+    <h2>See a problem? Report it now.</h2>
+    <p>It takes under 60 seconds. Your community is counting on you.</p>
+    <a href="report.html" class="btn" style="background:#fff;color:var(--green-dark);font-size:1rem;padding:.8rem 2rem">📸 Report an Issue →</a>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // Live stats on homepage
+  document.addEventListener('DOMContentLoaded', () => {
+    db.collection('issues').onSnapshot(snap => {
+      const issues = snap.docs.map(d => d.data());
+      document.getElementById('hero-total').textContent    = issues.length;
+      document.getElementById('hero-resolved').textContent = issues.filter(i => i.status === 'resolved').length;
+      document.getElementById('hero-open').textContent     = issues.filter(i => i.status === 'open').length;
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue Map — Community Hero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    #map { height: calc(100vh - 200px); min-height: 400px; border-radius: 0; z-index: 1; }
+    .legend { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+    .legend-item { display: flex; align-items: center; gap: .4rem; font-size: .82rem; font-weight: 500; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.15); flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span class="icon">🌍</span> Community Hero</div>
+  <div class="nav-links">
+    <a href="index.html"><span>🏠</span> Home</a>
+    <a href="report.html"><span>📸</span> Report</a>
+    <a href="issues.html"><span>📋</span> Issues</a>
+    <a href="map.html" class="active"><span>🗺️</span> Map</a>
+    <a href="dashboard.html"><span>📊</span> Dashboard</a>
+  </div>
+</nav>
+
+<!-- Header -->
+<div style="background:var(--white);border-bottom:1px solid var(--gray-200);padding:.85rem 1.5rem">
+  <div class="container">
+    <div class="flex items-center justify-between" style="flex-wrap:wrap;gap:.75rem">
+      <div>
+        <h1 style="font-size:1.1rem;font-weight:700">🗺️ Live Issue Map</h1>
+        <p style="font-size:.82rem;color:var(--gray-400)">Click any marker to see issue details</p>
+      </div>
+      <a href="report.html" class="btn btn-primary btn-sm">📸 Report Issue</a>
+    </div>
+    <!-- Legend -->
+    <div class="legend" style="margin-top:.75rem">
+      <span style="font-size:.8rem;font-weight:600;color:var(--gray-600)">Legend:</span>
+      <div class="legend-item"><div class="legend-dot" style="background:#be185d"></div>Pothole</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>Water</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>Streetlight</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>Waste</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#6b7280"></div>Other</div>
+    </div>
+  </div>
+</div>
+
+<div id="map"></div>
+<div id="toast"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script>
+  const catColors = {
+    pothole: '#be185d', water: '#2563eb',
+    streetlight: '#d97706', waste: '#7c3aed', other: '#6b7280'
+  };
+
+  function makeIcon(color) {
+    return L.divIcon({
+      className: '',
+      html: `<div style="
+        width:18px;height:18px;border-radius:50%;
+        background:${color};border:3px solid #fff;
+        box-shadow:0 0 0 2px ${color},0 2px 6px rgba(0,0,0,.3);
+      "></div>`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9],
+    });
+  }
+
+  // Init map centered on Pune
+  const map = L.map('map').setView([18.5204, 73.8567], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Load issues from Firestore
+  db.collection('issues').onSnapshot(snap => {
+    // Clear existing markers
+    map.eachLayer(layer => {
+      if (layer instanceof L.Marker) map.removeLayer(layer);
+    });
+
+    snap.docs.forEach(doc => {
+      const d = doc.data();
+      if (!d.lat || !d.lng) return;
+
+      const color = catColors[d.category] || catColors.other;
+      const marker = L.marker([d.lat, d.lng], { icon: makeIcon(color) }).addTo(map);
+
+      const imgTag = d.imageUrl
+        ? `<img src="${d.imageUrl}" style="width:100%;height:90px;object-fit:cover;border-radius:6px;margin-bottom:8px">`
+        : '';
+
+      marker.bindPopup(`
+        <div style="font-family:Inter,sans-serif;min-width:180px">
+          ${imgTag}
+          <strong style="font-size:13px">${d.title}</strong>
+          <div style="font-size:11px;color:#6b7280;margin:4px 0">${d.category} · ${d.status}</div>
+          <div style="font-size:12px">${(d.description || '').substring(0, 80)}...</div>
+          <div style="font-size:11px;color:#9ca3af;margin-top:6px">👍 ${d.upvotes || 0} upvotes</div>
+        </div>
+      `);
+    });
+  });
+</script>
+</body>
+</html>

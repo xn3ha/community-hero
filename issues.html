@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Issues — Community Hero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .filters { background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 1rem 0; margin-bottom: 1.5rem; position: sticky; top: 60px; z-index: 50; }
+    .filter-row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; }
+    .search-wrap input { padding-left: 2.25rem; }
+    .search-icon { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); color: var(--gray-400); font-size: .9rem; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><span class="icon">🌍</span> Community Hero</div>
+  <div class="nav-links">
+    <a href="index.html"><span>🏠</span> Home</a>
+    <a href="report.html"><span>📸</span> Report</a>
+    <a href="issues.html" class="active"><span>📋</span> Issues</a>
+    <a href="map.html"><span>🗺️</span> Map</a>
+    <a href="dashboard.html"><span>📊</span> Dashboard</a>
+  </div>
+</nav>
+
+<!-- Mini hero -->
+<div style="background:linear-gradient(135deg,var(--green-dark),#166534);color:#fff;padding:2rem 1.5rem 1.75rem;text-align:center">
+  <h1 style="font-size:1.6rem;font-weight:800;margin-bottom:.4rem">Community Issues</h1>
+  <p style="opacity:.85;font-size:.95rem">All reported issues in your area — live updates</p>
+  <div class="hero-stats" style="margin-top:1.25rem">
+    <div class="stat"><span class="stat-num" id="hero-total">—</span><span class="stat-label">Total</span></div>
+    <div class="stat"><span class="stat-num" id="hero-open">—</span><span class="stat-label">Open</span></div>
+    <div class="stat"><span class="stat-num" id="hero-resolved">—</span><span class="stat-label">Resolved</span></div>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="filters">
+  <div class="container">
+    <div class="filter-row">
+      <!-- Search -->
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="search-input" placeholder="Search issues...">
+      </div>
+      <!-- Status filter -->
+      <select id="filter-status" style="width:auto;padding:.65rem .9rem">
+        <option value="">All Statuses</option>
+        <option value="open">🔴 Open</option>
+        <option value="in-progress">🟡 In Progress</option>
+        <option value="resolved">🟢 Resolved</option>
+      </select>
+      <!-- Report button -->
+      <a href="report.html" class="btn btn-primary btn-sm">+ Report Issue</a>
+    </div>
+
+    <!-- Category pills -->
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem">
+      <button class="cat-pill active" data-cat="all">🗺️ All</button>
+      <button class="cat-pill" data-cat="pothole">🕳️ Pothole</button>
+      <button class="cat-pill" data-cat="water">💧 Water</button>
+      <button class="cat-pill" data-cat="streetlight">💡 Streetlight</button>
+      <button class="cat-pill" data-cat="waste">🗑️ Waste</button>
+      <button class="cat-pill" data-cat="other">📌 Other</button>
+    </div>
+  </div>
+</div>
+
+<!-- Grid -->
+<div class="container" style="padding-bottom:3rem">
+  <div class="grid-3" id="issues-grid">
+    <div class="empty" style="grid-column:1/-1"><div class="icon">⏳</div><p>Loading issues...</p></div>
+  </div>
+</div>
+
+<!-- Issue Detail Modal -->
+<div class="modal-overlay" id="issue-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Issue Details</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script src="js/firebase-config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
